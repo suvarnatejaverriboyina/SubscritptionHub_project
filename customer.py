@@ -18,12 +18,12 @@ def purchase_subscription(current_user):
         return
 
     print("\n===== AVAILABLE PLANS =====")
-
+    print("PlanID | PlanName | Price | Duration"  )
     for plan in plans:
         print(
-            f"{plan['plan_id']} | "
-            f"{plan['plan_name']} | "
-            f"${plan['price']} | "
+            f"{plan['plan_id']}  | "
+            f"{plan['plan_name']}  | "
+            f"${plan['price']}  | "
             f"{plan['duration']} days"
         )
 

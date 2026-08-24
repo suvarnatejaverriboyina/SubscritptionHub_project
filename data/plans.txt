@@ -1,2 +1,6 @@
-P002|Deewana|200.0|31
-P002|Dilse|399.0|31
+P001|Basic Plan|399.0|45
+P002|Med4ium Plan|899.0|84
+P003|Premium|1299.0|108
+P004|Diamond Offer|1450.0|125
+P005|Mini Plan|49.0|1
+P006|Chitti|20.0|2

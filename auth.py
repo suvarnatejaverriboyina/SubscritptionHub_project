@@ -29,7 +29,7 @@ def admin_login():
     email = input("Enter Admin Email: ")
     password = input("Enter Admin Password: ")
     # Compare with admin credentials
-    if email == "admin@subscriptionhub.com" and password == "admin123":
+    if email == "admin@subscriptionhub.com" and password == "admin@123":
         print("Admin Login Successful.")
         return True
 
@@ -38,6 +38,7 @@ def admin_login():
 
 def logout():
     print("Successfully Logged out")
+    return None
     
 
     

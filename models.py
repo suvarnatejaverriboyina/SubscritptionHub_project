@@ -9,7 +9,9 @@ class User:
     def __str__(self):
         return f"{self.name} - {self.email}"
 class Admin(User):
-    pass
+    def __init__(self,email,password):
+        self.email=email
+        self.password=password
 class Customer(User):
     def __init__(self,customer_id,name,email,password):
         super().__init__(name,email,password)

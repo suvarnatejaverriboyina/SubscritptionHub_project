@@ -1,2 +1,12 @@
-N001|C001|Plan Expiry Remiander|Your Plan is Expiring soon.|2026-07-26|Unread
-N002|C002|Renew Plan|Renew your plan to enjoy uninterrupted Services|2026-07-26|Unread
+N001|C002|Remainder before 1 week|To enjoy Uninterrupted Services recharge immediately.|2026-08-06|Unread
+N002|C001|Recommendation Message|To enjoy the Services Please Purchase a Plan.|2026-08-06|Unread
+N003|C002|Expiry Reminder|Your subscription S004 expires on 2026-08-09|2026-08-07|Unread
+N004|C005|Offers|There is a Offer in Diamond Plan to enjoy HD Quality Services Purchase diamond plan|2026-08-07|Unread
+N005|C005|Expiry Reminder|There is a Offer in Diamond Plan to enjoy HD Quality Services Purchase diamond plan|2026-08-07|Unread
+N006|C007|Expiry Reminder|Your subscription S007 expires on 2026-08-21|2026-08-19|Unread
+N007|C002|Subscription Expired|Your subscription S004 expired on 2026-08-09. Please renew to enjoy uninterrupted services.|2026-08-19|Unread
+N008|C007|Expiry Reminder|Your subscription S007 expires on 2026-08-21. You have 2 day(s) remaining. Please renew to enjoy uninterrupted services.|2026-08-19|Unread
+N009|C001|Suggestion|You have new plan to explore..|2026-08-19|Unread
+N010|C002|Subscription Expired|Your subscription S004 expired on 2026-08-09. Please renew to enjoy uninterrupted services.|2026-08-20|Unread
+N011|C006|Expiry Reminder|Your subscription S008 expires on 2026-08-20. You have 0 day(s) remaining. Please renew to enjoy uninterrupted services.|2026-08-20|Unread
+N012|C006|Subscription Expired|Your subscription S008 expired on 2026-08-19. Please renew to enjoy uninterrupted services.|2026-08-20|Unread

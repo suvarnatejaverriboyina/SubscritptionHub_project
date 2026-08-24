@@ -44,7 +44,7 @@ def view_plans():
     print("\n" + "-" * 40)
     print("       ALL SUBSCRIPTION PLANS")
     print("-" * 40)
-
+    print("PlanID     |Plan Name       |Price      |Duration")
     for plan in plans:
         plan_object = SubscriptionPlan(
             plan["plan_id"],
@@ -65,7 +65,7 @@ def update_plan():
         print("\nNo plans available to update.")
         return
 
-    plan_id = input("Enter Plan ID to update: ")
+    plan_id = input("Enter Plan ID to update: ").upper()
 
     found = False
 
@@ -118,7 +118,7 @@ def delete_plan():
         print("\nNo plans available to delete.")
         return
 
-    plan_id = input("Enter Plan ID to delete: ")
+    plan_id = input("Enter Plan ID to delete: ").upper()
 
     new_plans = []
     found = False
@@ -194,7 +194,7 @@ def view_customers():
     print("\n" + "-" * 40)
     print("          ALL CUSTOMERS")
     print("-" * 40)
-
+  
     for user in users:
         print(f"Customer ID: {user['customer_id']}")
         print(f"Name       : {user['name']}")
@@ -204,12 +204,12 @@ def view_customers():
 
 #Search a customer
 def search_customer():
-    customer_id = input("Enter Customer ID: ")
+    customer_id = input("Enter Customer ID: ").upper()
 
     users = load_users()
 
     for user in users:
-        if user["customer_id"] == customer_id:
+        if user["customer_id"] == customer_id:  
             print("\nCustomer Found!")
             print(f"Customer ID: {user['customer_id']}")
             print(f"Name       : {user['name']}")
@@ -220,7 +220,7 @@ def search_customer():
 
 #Remove the customer
 def remove_customer():
-    customer_id = input("Enter Customer ID to delete: ")
+    customer_id = input("Enter Customer ID to delete: ").upper()
 
     confirm = input(
         "Are you sure you want to delete this customer? (yes/no): "
@@ -440,14 +440,15 @@ def send_notification():
 
 
 def create_expiry_reminders():
+
     subscriptions = load_subscriptions()
     notifications = load_notifications()
 
     today = date.today()
-    reminder_date = today + timedelta(days=3)
-
+ 
     for subscription in subscriptions:
 
+        # Only process Active subscriptions
         if subscription["status"] != "Active":
             continue
 
@@ -455,18 +456,82 @@ def create_expiry_reminders():
             subscription["expiry_date"]
         )
 
-        if today <= expiry_date <= reminder_date:
+        days_left = (expiry_date - today).days
+
+        # --------------------------------
+        # SUBSCRIPTION EXPIRED
+        # --------------------------------
+        if days_left < 0:
+
+            subscription["status"] = "Expired"
+
+            message = (
+                f"Your subscription {subscription['sub_id']} "
+                f"expired on {subscription['expiry_date']}. "
+                f"Please renew to enjoy uninterrupted services."
+            )
 
             already_exists = False
 
             for notification in notifications:
+
                 if (
                     notification["customer_id"]
                     == subscription["customer_id"]
+
+                    and notification["notification_type"]
+                    == "Subscription Expired"
+
+                    and notification["date"]
+                    == str(today)
+                ):
+                    already_exists = True
+                    break
+
+            if not already_exists:
+
+                notification = {
+                    "notification_id": generate_notification_id(),
+                    "customer_id": subscription["customer_id"],
+                    "notification_type": "Subscription Expired",
+                    "message": message,
+                    "date": str(today),
+                    "status": "Unread"
+                }
+
+                save_notification(notification)
+                notifications.append(notification)
+
+                print(
+                    f"Subscription expired for "
+                    f"{subscription['customer_id']}"
+                )
+
+        # --------------------------------
+        # EXPIRING WITHIN 3 DAYS
+        # --------------------------------
+        elif 0 <= days_left <= 3:
+
+            message = (
+                f"Your subscription {subscription['sub_id']} "
+                f"expires on {subscription['expiry_date']}. "
+                f"You have {days_left} day(s) remaining. "
+                f"Please renew to enjoy uninterrupted services."
+            )
+
+            already_exists = False
+
+            for notification in notifications:
+
+                if (
+                    notification["customer_id"]
+                    == subscription["customer_id"]
+
                     and notification["notification_type"]
                     == "Expiry Reminder"
-                    and notification["message"]
-                    == f"Your subscription {subscription['sub_id']} expires on {subscription['expiry_date']}"
+
+                    and notification["date"]
+                    == str(today)
                 ):
                     already_exists = True
                     break
@@ -477,24 +542,23 @@ def create_expiry_reminders():
                     "notification_id": generate_notification_id(),
                     "customer_id": subscription["customer_id"],
                     "notification_type": "Expiry Reminder",
-                    "message": (
-                        f"Your subscription "
-                        f"{subscription['sub_id']} expires on "
-                        f"{subscription['expiry_date']}"
-                    ),
+                    "message": message,
                     "date": str(today),
                     "status": "Unread"
                 }
 
                 save_notification(notification)
+                notifications.append(notification)
 
                 print(
                     f"Expiry reminder created for "
                     f"{subscription['customer_id']}"
                 )
 
-    print("Expiry reminder process completed.")
+    # Save Active to Expired changes
+    update_subscriptions(subscriptions)
 
+    print("Expiry reminder process completed.")
 
 
 def manage_notifications():
@@ -506,8 +570,8 @@ def manage_notifications():
 
         print("1. View All Notifications")
         print("2. Send Notification")
-        print("3. Create Expiry Reminders")
-        print("4. Back")
+      
+        print("3. Back")
 
         try:
             choice = int(input("Enter your choice: "))
@@ -522,10 +586,9 @@ def manage_notifications():
         elif choice == 2:
             send_notification()
 
-        elif choice == 3:
-            create_expiry_reminders()
+       
 
-        elif choice == 4:
+        elif choice == 3:
             break
 
         else:

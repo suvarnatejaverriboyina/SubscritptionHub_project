@@ -8,23 +8,36 @@ def save_user(user):
             f"{user.email}|"
             f"{user.password}\n"
         )
-
 def load_users():
     users = []
+
     try:
         with open("data/users.txt", "r") as file:
+
             for line in file:
-                data = line.strip().split("|")
+                line = line.strip()
+
+                # Skip empty lines
+                if not line:
+                    continue
+
+                data = line.split("|")
+
+                # Skip invalid records
+                if len(data) != 4:
+                    continue
+
                 user = {
-                    "customer_id":data[0],
+                    "customer_id": data[0],
                     "name": data[1],
                     "email": data[2],
                     "password": data[3]
                 }
+
                 users.append(user)
+
     except FileNotFoundError:
         print("Users file not found.")
-
 
     return users
 def generate_customer_id():
@@ -112,22 +125,42 @@ def generate_subscription_id():
         with open("data/subscriptions.txt", "r") as file:
             lines = file.readlines()
 
-        if not lines:
-            return "S001"
-
         numbers = []
 
         for line in lines:
-            sub_id = line.strip().split("|")[0]
-            number = int(sub_id[1:])
-            numbers.append(number)
+            line = line.strip()
+
+            # Skip blank lines
+            if not line:
+                continue
+
+            data = line.split("|")
+
+            # Skip invalid records
+            if len(data) < 1:
+                continue
+
+            sub_id = data[0]
+
+            # Skip if Subscription ID is invalid
+            if not sub_id.startswith("S"):
+                continue
+
+            try:
+                number = int(sub_id[1:])
+                numbers.append(number)
+            except ValueError:
+                continue
+
+        # If no valid subscriptions exist
+        if not numbers:
+            return "S001"
 
         next_number = max(numbers) + 1
+        return f"S{next_number:03d}"
 
     except FileNotFoundError:
-        next_number = 1
-
-    return f"S{next_number:03d}"
+        return "S001"
 
 def save_subscription(subscription):
     with open("data/subscriptions.txt", "a") as file:

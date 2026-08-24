@@ -1,6 +1,6 @@
 
 from auth import register,login,admin_login,logout
-from admin import manage_plans,manage_customers,manage_subscriptions,manage_notifications
+from admin import manage_plans,manage_customers,manage_subscriptions,manage_notifications,create_expiry_reminders
 from customer import purchase_subscription,view_my_subscription,renew_subscription,cancel_subscription,view_available_plans
 
 
@@ -54,6 +54,7 @@ while True:
     if choice == 1:
         success=admin_login()
         if success:
+            create_expiry_reminders()
             while True:
                 admin_choice=admin_menu()
                 if admin_choice==1:
@@ -96,7 +97,7 @@ while True:
         register()
 
     elif choice==4:
-        print("---------Thank you for suing Subscription Hub---------")
+        print("---------Thank you for using Subscription Hub---------")
         break
     else:
         print("Invalid Choice")
