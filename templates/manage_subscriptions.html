@@ -1,0 +1,110 @@
+
+{% extends "base.html" %}
+
+{% block title %}Manage Subscriptions - SMS Hub{% endblock %}
+
+{% block content %}
+<section class="manage-plans-section">
+
+    <div class="manage-plans-header">
+        <p class="dashboard-label">ADMINISTRATION</p>
+        <h1>Manage Subscriptions</h1>
+        <p>View customer subscriptions, plans, and subscription periods.</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="plans-list-card">
+
+        <div class="plans-list-header">
+            <div>
+                <h2>All Subscriptions</h2>
+                <p>Review subscription details and current status.</p>
+            </div>
+
+            <span class="plans-count">
+                {{ subscriptions|length }} Subscriptions
+            </span>
+        </div>
+
+        {% if subscriptions %}
+        <div class="plans-table-wrapper">
+            <table class="plans-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Plan</th>
+                        <th>Price</th>
+                        <th>Start Date</th>
+                        <th>Expiry Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for subscription in subscriptions %}
+                    <tr>
+                        <td>{{ subscription.subscription_id }}</td>
+
+                        <td>
+                            <strong>{{ subscription.customer_name }}</strong>
+                            <br>
+                            <small>{{ subscription.customer_email }}</small>
+                        </td>
+
+                        <td class="plan-name-cell">
+                            {{ subscription.plan_name }}
+                        </td>
+
+                        <td>₹{{ "%.2f"|format(subscription.price) }}</td>
+
+                        <td>
+                            {{ subscription.start_date.strftime('%d-%m-%Y') }}
+                        </td>
+
+                        <td>
+                            {{ subscription.expiry_date.strftime('%d-%m-%Y') }}
+                        </td>
+
+                        <td>
+                            <span class="plan-status
+                                {% if subscription.status|lower == 'active' %}
+                                    active-status
+                                {% else %}
+                                    inactive-status
+                                {% endif %}">
+                                {{ subscription.status|title }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+        <div class="empty-plans">
+            <h3>No Subscriptions Found</h3>
+            <p>Subscriptions will appear here when customers subscribe to plans.</p>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <div class="dashboard-navigation">
+        <a href="{{ url_for('dashboard') }}" class="dashboard-btn">
+            Back to Dashboard
+        </a>
+    </div>
+
+</section>
+{% endblock %}

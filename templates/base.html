@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}SMS - Hub{% endblock %}
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="site-header">
+        <nav class="navbar">
+
+            <a href="{{ url_for('home') }}" class="brand">
+                SMS <span>- Hub</span>
+            </a>
+
+            <div class="nav-links">
+                {% block navbar %}
+                {% endblock %}
+            </div>
+
+        </nav>
+    </header>
+
+    <!-- Main Page Content -->
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        {% block footer %}
+            <p>&copy; 2026 SMS - Hub. All rights reserved.</p>
+        {% endblock %}
+    </footer>
+
+</body>
+</html>

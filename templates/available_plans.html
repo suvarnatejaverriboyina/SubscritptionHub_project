@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Available Plans | SMS Hub{% endblock %}
+
+{% block navbar %}
+<a href="{{ url_for('home') }}" class="nav-link">Home</a>
+<a href="{{ url_for('dashboard') }}" class="nav-link active">Dashboard</a>
+<a href="{{ url_for('logout') }}" class="btn btn-outline">Logout</a>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+
+    <div class="dashboard-welcome">
+        <p class="dashboard-label">FIND YOUR PLAN</p>
+        <h1>Available Subscription Plans</h1>
+        <p>Choose a plan that fits your needs and subscription duration.</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash-message {{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="dashboard-grid">
+        {% for plan in plans %}
+        <div class="dashboard-card">
+            <div class="dashboard-icon">✨</div>
+
+            <h2>{{ plan.plan_name }}</h2>
+
+            <p>
+                Subscription duration: {{ plan.duration }} days
+            </p>
+
+            <h2>₹{{ "%.2f"|format(plan.price) }}</h2>
+
+            <form action="{{ url_for('subscribe_plan') }}" method="POST">
+                <input type="hidden" name="plan_id" value="{{ plan.plan_id }}">
+
+                <button type="submit" class="dashboard-btn">
+                    Subscribe →
+                </button>
+            </form>
+        </div>
+        {% else %}
+        <div class="dashboard-card">
+            <h2>No Plans Available</h2>
+            <p>There are currently no active subscription plans.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="dashboard-navigation">
+        <a href="{{ url_for('dashboard') }}" class="dashboard-btn">
+            Back to Dashboard
+        </a>
+    </div>
+
+</section>
+{% endblock %}

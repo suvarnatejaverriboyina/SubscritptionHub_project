@@ -1,8 +1,0 @@
-C001|Ravi|ravikrishna@gmail.com|r1a2v3i4
-C002|Suresh|sureshkantheti@gmail.com|suresh09@87
-C003|Raghava|raghavendra@gmail.com|raghava@369
-C004|Adhi|adhi2026@gmail.com|adhi1234@jabardasth
-C005|Mahesh Babu|maheshbabu0987@gmail.com|Mahesh1111@22
-C006|srinubabu|srinubabu@gmail.com|1234
-C007|SanjayRamaSaamy|jayramasammy134@gmail.com|jay143
-C009|Saranya|sranya@gmail.com|0192

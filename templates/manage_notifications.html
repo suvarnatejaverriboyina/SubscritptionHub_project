@@ -1,0 +1,72 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="dashboard-section">
+
+    <div class="dashboard-welcome">
+        <h1>Manage Notifications</h1>
+        <p>View subscription reminders and notifications sent to customers.</p>
+    </div>
+
+    {% if notifications %}
+
+        <div class="dashboard-grid">
+            {% for notification in notifications %}
+
+                <div class="dashboard-card">
+
+                    <h3>{{ notification.notification_type }}</h3>
+
+                    <p>
+                        <strong>Customer:</strong>
+                        {{ notification.customer_name }}
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong>
+                        {{ notification.customer_email }}
+                    </p>
+
+                    <p>
+                        <strong>Subscription ID:</strong>
+                        {{ notification.subscription_id }}
+                    </p>
+
+                    <p>{{ notification.message }}</p>
+
+                    <p>
+                        <strong>Date:</strong>
+                        {{ notification.notification_date }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        {{ notification.status }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+        </div>
+
+    {% else %}
+
+        <div class="dashboard-card">
+            <h3>No notifications available</h3>
+            <p>
+                Notifications will appear here after they are generated
+                for customers.
+            </p>
+        </div>
+
+    {% endif %}
+
+    <a href="{{ url_for('dashboard') }}" class="dashboard-btn">
+        Back to Dashboard
+    </a>
+
+</section>
+
+{% endblock %}

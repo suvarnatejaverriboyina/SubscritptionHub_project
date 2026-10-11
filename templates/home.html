@@ -1,0 +1,107 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+    Home | SMS - Hub
+{% endblock %}
+
+{% block navbar %}
+
+    <a href="{{ url_for('home') }}" class="nav-link active">
+        Home
+    </a>
+
+    <a href="{{ url_for('dashboard') }}" class="nav-link">
+        Dashboard
+    </a>
+
+    <a href="{{ url_for('login') }}" class="btn btn-outline">
+        Login
+    </a>
+
+    <a href="{{ url_for('register') }}" class="btn btn-outline">
+        Register
+    </a>
+
+    <a href="{{ url_for('logout') }}" class="btn btn-outline">
+        Logout
+    </a>
+
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="hero-label">
+            SIMPLE. SMART. FLEXIBLE.
+        </p>
+
+        <h1 class="hero-title">
+            Manage Your Subscriptions,
+            <span>All in One Place.</span>
+        </h1>
+
+        <p class="hero-description">
+            Welcome to SMS - Hub, your simple subscription management
+            platform. Explore available plans, manage your subscriptions,
+            and keep track of your renewals with ease.
+        </p>
+
+        <div class="hero-actions">
+
+            <a href="#" class="btn btn-primary">
+                Explore Plans
+            </a>
+
+            <a href="#" class="btn btn-secondary">
+                Get Started
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-card">
+
+        <div class="hero-card-icon">
+            &#9733;
+        </div>
+
+        <p class="hero-card-label">
+            YOUR SUBSCRIPTIONS
+        </p>
+
+        <h2 class="hero-card-title">
+            Everything in one place.
+        </h2>
+
+        <p class="hero-card-description">
+            One platform to view plans, manage renewals,
+            and stay updated.
+        </p>
+
+        <div class="hero-card-divider"></div>
+
+        <div class="hero-card-feature">
+            <span class="feature-check">&#10003;</span>
+            Easy subscription tracking
+        </div>
+
+        <div class="hero-card-feature">
+            <span class="feature-check">&#10003;</span>
+            Simple plan management
+        </div>
+
+        <div class="hero-card-feature">
+            <span class="feature-check">&#10003;</span>
+            Timely expiry reminders
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

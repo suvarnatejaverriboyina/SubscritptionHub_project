@@ -1,0 +1,145 @@
+
+{% extends "base.html" %}
+
+{% block title %}Manage Customers - SMS Hub{% endblock %}
+
+{% block content %}
+
+<section class="manage-plans-section">
+
+    <!-- Page Heading -->
+    <div class="manage-plans-header">
+        <p class="dashboard-label">ADMINISTRATION</p>
+        <h1>Manage Customers</h1>
+        <p>
+            View and manage registered customers
+            in your subscription management system.
+        </p>
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash-message {{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <!-- Customers Table Card -->
+    <div class="plans-list-card">
+
+        <div class="plans-list-header">
+            <div>
+                <h2>Registered Customers</h2>
+                <p>View customer details and account roles.</p>
+            </div>
+
+            <span class="plans-count">
+                {{ customers|length }} Customers
+            </span>
+        </div>
+
+        <!-- Search Customers -->
+        <form
+            action="{{ url_for('manage_customers') }}"
+            method="GET"
+            class="customer-search-form"
+        >
+            <input
+                type="text"
+                name="search"
+                placeholder="Search by customer name or email..."
+                value="{{ search_term|default('') }}"
+                aria-label="Search customers"
+            >
+
+            <button type="submit" class="dashboard-btn">
+                Search
+            </button>
+
+            {% if search_term|default('') %}
+            <a
+                href="{{ url_for('manage_customers') }}"
+                class="plan-action-btn edit-btn"
+            >
+                Clear
+            </a>
+            {% endif %}
+        </form>
+
+        <!-- Customer Table -->
+        {% if customers %}
+
+        <div class="plans-table-wrapper">
+
+            <table class="plans-table">
+
+                <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Customer Name</th>
+                        <th>Email Address</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>{{ customer.customer_id }}</td>
+
+                        <td class="plan-name-cell">
+                            {{ customer.name }}
+                        </td>
+
+                        <td>{{ customer.email }}</td>
+
+                        <td>
+                            <span class="plan-status active-status">
+                                {{ customer.role|title }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <!-- Empty Search Results -->
+        <div class="empty-plans">
+            {% if search_term|default('') %}
+            <h3>No Customers Found</h3>
+            <p>
+                No customers match "{{ search_term }}".
+                Try a different name or email address.
+            </p>
+            {% else %}
+            <h3>No Registered Customers Yet</h3>
+            <p>
+                There are no customers to display.
+                Registered customers will appear here.
+            </p>
+            {% endif %}
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- Back to Dashboard -->
+    <div class="dashboard-navigation">
+        <a href="{{ url_for('dashboard') }}" class="dashboard-btn">
+            Back to Dashboard
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}

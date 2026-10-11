@@ -1,0 +1,75 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Subscriptions | SMS Hub{% endblock %}
+
+{% block navbar %}
+<a href="{{ url_for('home') }}" class="nav-link">Home</a>
+<a href="{{ url_for('dashboard') }}" class="nav-link active">Dashboard</a>
+<a href="{{ url_for('logout') }}" class="btn btn-outline">Logout</a>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+
+    <div class="dashboard-welcome">
+        <p class="dashboard-label">YOUR ACCOUNT</p>
+        <h1>My Subscriptions</h1>
+        <p>View your subscription plans, dates, and current status.</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if subscriptions %}
+        <div class="dashboard-grid">
+            {% for subscription in subscriptions %}
+                <div class="dashboard-card">
+                    <div class="dashboard-icon">📅</div>
+
+                    <h2>{{ subscription.plan_name }}</h2>
+
+                    <p>Price: ₹{{ "%.2f"|format(subscription.price) }}</p>
+                    <p>Duration: {{ subscription.duration }} days</p>
+                    <p>
+                        Start Date:
+                        {{ subscription.start_date.strftime('%d-%m-%Y') }}
+                    </p>
+                    <p>
+                        Expiry Date:
+                        {{ subscription.expiry_date.strftime('%d-%m-%Y') }}
+                    </p>
+                    <p>
+                        Status:
+                        <strong>{{ subscription.status|title }}</strong>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="dashboard-card">
+            <h2>No Subscriptions Yet</h2>
+            <p>You haven't subscribed to any plans yet.</p>
+
+            <a href="{{ url_for('available_plans') }}"
+               class="dashboard-btn">
+                Explore Plans →
+            </a>
+        </div>
+    {% endif %}
+
+    <div class="dashboard-navigation">
+        <a href="{{ url_for('dashboard') }}" class="dashboard-btn">
+            Back to Dashboard
+        </a>
+    </div>
+
+</section>
+{% endblock %}

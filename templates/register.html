@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register | SMS - Hub
+{% endblock %}
+
+{% block navbar %} <a href="{{ url_for('home') }}" class="nav-link">Home</a> 
+<a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a> 
+<a href="{{ url_for('login') }}" class="btn btn-outline">Login</a> 
+<a href="{{ url_for('register') }}" class="btn btn-outline">Register</a>
+<a href="{{ url_for('logout') }}" class="btn btn-outline">Logout</a>
+{% endblock %}
+
+{% block content %}
+
+<div>
+    {% with messages=get_flashed_messages(with_categories=true) %}
+        {% for category,message in messages %}
+            {% if category=='msg' %}
+                <div class="alert-success">
+                    {{ message }}
+                </div>
+            {% elif category=='err' %}
+                <div class="alert-danger">
+                    {{ message }}
+
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endwith %}
+</div>
+
+
+
+
+
+
+<section class="auth-section">
+    <div class="auth-card">
+
+
+    <div class="auth-heading">
+        <div class="auth-icon">&#10024;</div>
+        <p class="auth-label">JOIN SMS - HUB</p>
+        <h1>Create Your Account</h1>
+        <p class="auth-description">
+            Start managing your subscriptions with ease.
+        </p>
+    </div>
+
+    <form action="{{ url_for('register') }}" method="POST" class="auth-form">
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your username"
+                autocomplete="username"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Create a password"
+                autocomplete="new-password"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="confirmpassword">Confirm Password</label>
+            <input
+                type="password"
+                id="confirmpassword"
+                name="confirmpassword"
+                placeholder="Re-enter your password"
+                autocomplete="new-password"
+                required
+            >
+        </div>
+
+        <button type="submit" name="register" class="auth-submit">
+            Create Account &rarr;
+        </button>
+
+    </form>
+
+    <p class="auth-switch">
+        Already have an account?
+        <a href="{{ url_for('login') }}">Login here</a>
+    </p>
+
+</div>
+
+
+</section>
+{% endblock %}
